@@ -11,11 +11,12 @@ namespace Shop.Persistence
 {
     public static class PersistenceServicesRegistration
     {
-        public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services)
+        public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services,
+            string connectionString)
         {
             services.AddDbContext<ShopDbContext>(options =>
             {
-                options.UseSqlServer("");
+                options.UseSqlServer(connectionString);
             });
 
             return services;
