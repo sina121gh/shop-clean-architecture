@@ -25,5 +25,7 @@ namespace Shop.Persistence.Repositories.Common
         public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
         public void Update(T entity) => _dbSet.Update(entity);
         public void Delete(T entity) => _dbSet.Remove(entity);
+
+        public async Task<bool> DoesExistAsync(int id) => await _dbSet.FindAsync(id) != null;
     }
 }

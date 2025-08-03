@@ -11,6 +11,7 @@ namespace Shop.Domain.Interfaces.Common
         Task<T?> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
         Task AddAsync(T entity);
+        Task<bool> DoesExistAsync(int id);
         void Update(T entity);
         void Delete(T entity);
     }
