@@ -1,6 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Shop.Domain.Interfaces;
+using Shop.Domain.Interfaces.Common;
 using Shop.Persistence.Context;
+using Shop.Persistence.Repositories;
+using Shop.Persistence.Repositories.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +22,9 @@ namespace Shop.Persistence
             {
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
         }
