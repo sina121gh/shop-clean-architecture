@@ -18,6 +18,14 @@ namespace Shop.Persistence.Configurations
             builder.Property(c => c.Name)
                 .HasMaxLength(50)
                 .IsRequired();
+
+            builder.HasData(
+                new Category { Id = 1, Name = "ورزشی" },
+                new Category { Id = 2, Name = "خانه" },
+                new Category { Id = 3, Name = "موبایل" },
+                new Category { Id = 4, Name = "لپ تاپ" },
+                new Category { Id = 5, Name = "کامپیوتر" }
+                );
         }
     }
 }

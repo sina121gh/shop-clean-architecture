@@ -33,6 +33,11 @@ namespace Shop.Persistence.Configurations
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
 
+
+            builder.HasData(
+                new Product { Id = 1, CategoryId = 1, Name = "محصول یک", Description = "توضیحات محصول یک",
+                    IsActive = true, Price = 1000000 }
+                );
         }
     }
 }
