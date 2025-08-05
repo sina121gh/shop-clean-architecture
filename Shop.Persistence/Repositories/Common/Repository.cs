@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shop.Domain.Interfaces.Common;
+using Shop.Application.Interfaces.Common;
 using Shop.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -26,6 +26,8 @@ namespace Shop.Persistence.Repositories.Common
         public void Update(T entity) => _dbSet.Update(entity);
         public void Delete(T entity) => _dbSet.Remove(entity);
 
-        public async Task<bool> DoesExistAsync(int id) => await _dbSet.FindAsync(id) != null;
+        public async Task<bool> DoesExistByIdAsync(int id) => await _dbSet.FindAsync(id) != null;
+
+        public async Task<bool> SaveChangesAsync() => await _context.SaveChangesAsync() > 0;
     }
 }

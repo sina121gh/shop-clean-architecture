@@ -1,5 +1,5 @@
-﻿using Shop.Domain.Entities;
-using Shop.Application.Interfaces;
+﻿using Shop.Application.Interfaces;
+using Shop.Domain.Entities;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Common;
 using System;
@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Shop.Persistence.Repositories
 {
-    public class ProductRepository : Repository<Product>, IProductRepository
+    public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
         private readonly ShopDbContext _context;
 
-        public ProductRepository(ShopDbContext context) : base(context)
+        public CategoryRepository(ShopDbContext context) : base(context)
         {
             _context = context;
         }

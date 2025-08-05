@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Shop.Domain.Interfaces;
-using Shop.Domain.Interfaces.Common;
+using Shop.Application.Interfaces;
+using Shop.Application.Interfaces.Common;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories;
 using Shop.Persistence.Repositories.Common;
