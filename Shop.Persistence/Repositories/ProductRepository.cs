@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shop.Persistence.Repositories
 {
@@ -17,6 +18,13 @@ namespace Shop.Persistence.Repositories
         public ProductRepository(ShopDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<Product?> GetProductByIdIncludingCategory(int productId)
+        {
+            return await _context.Products
+                .Include(p => p.Category)
+                .SingleOrDefaultAsync(p => p.Id == productId);
         }
     }
 }

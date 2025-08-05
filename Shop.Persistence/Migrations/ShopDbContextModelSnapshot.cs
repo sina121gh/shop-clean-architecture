@@ -16,7 +16,7 @@ namespace Shop.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.7")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -31,11 +31,39 @@ namespace Shop.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "ورزشی"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "خانه"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "موبایل"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "لپ تاپ"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "کامپیوتر"
+                        });
                 });
 
             modelBuilder.Entity("Shop.Domain.Entities.Product", b =>
@@ -51,14 +79,16 @@ namespace Shop.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -68,6 +98,17 @@ namespace Shop.Persistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Description = "توضیحات محصول یک",
+                            IsActive = true,
+                            Name = "محصول یک",
+                            Price = 1000000m
+                        });
                 });
 
             modelBuilder.Entity("Shop.Domain.Entities.Product", b =>

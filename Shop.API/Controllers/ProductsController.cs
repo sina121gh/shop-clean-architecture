@@ -7,7 +7,7 @@ using MapsterMapper;
 
 namespace Shop.API.Controllers
 {
-    [Route("products")]
+    [Route("api/products")]
     public class ProductsController : ControllerBase
     {
         #region Ctor
@@ -27,6 +27,7 @@ namespace Shop.API.Controllers
 
         #endregion
 
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<ShowProductDto>>> GetAllAsync()
         {
             var products = await _productRepository.GetAllAsync();
@@ -34,20 +35,23 @@ namespace Shop.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShowProductDto>> GetProductByIdAsync(int id)
+        public async Task<ActionResult<ShowProductWithCategoryDto>> GetProductByIdAsync(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await _productRepository.GetProductByIdIncludingCategory(id);
 
             if (product is null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ShowProductDto>(product));
+            return Ok(_mapper.Map<ShowProductWithCategoryDto>(product));
         }
 
 
         [HttpPost]
-        public async Task<ActionResult<ShowProductDto>> CreateProductAsync(CreateProductDto createProductDto)
+        public async Task<ActionResult<ShowProductDto>> CreateProductAsync([FromBody] CreateProductDto createProductDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var product = _mapper.Map<Product>(createProductDto);
 
             if (!await _categoryRepository.DoesExistByIdAsync(product.CategoryId)) return NotFound();
@@ -57,7 +61,7 @@ namespace Shop.API.Controllers
             try
             {
                 await _productRepository.SaveChangesAsync();
-                return CreatedAtAction("GetProductByIdAsync", _mapper.Map<ShowProductDto>(product));
+                return Created();
             }
             catch (Exception)
             {
@@ -67,15 +71,18 @@ namespace Shop.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateProductAsync(int id, Product product)
+        public async Task<ActionResult> UpdateProductAsync(int id, [FromBody] CreateProductDto product)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var productToUpdate = await _productRepository.GetByIdAsync(id);
 
             if (productToUpdate is null) return NotFound();
 
             _mapper.Map(product, productToUpdate);
 
-            _productRepository.Update(product);
+            _productRepository.Update(productToUpdate);
 
             try
             {

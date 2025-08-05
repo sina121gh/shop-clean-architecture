@@ -10,5 +10,6 @@ namespace Shop.Application.Interfaces
 {
     public interface IProductRepository : IRepository<Product>
     {
+        Task<Product?> GetProductByIdIncludingCategory(int productId);
     }
 }

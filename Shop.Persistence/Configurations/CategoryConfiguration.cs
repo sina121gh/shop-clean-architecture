@@ -20,11 +20,11 @@ namespace Shop.Persistence.Configurations
                 .IsRequired();
 
             builder.HasData(
-                new Category { Id = 1, Name = "ورزشی" },
-                new Category { Id = 2, Name = "خانه" },
-                new Category { Id = 3, Name = "موبایل" },
-                new Category { Id = 4, Name = "لپ تاپ" },
-                new Category { Id = 5, Name = "کامپیوتر" }
+                new Category() { Id = 1, Name = "ورزشی" },
+                new Category() { Id = 2, Name = "خانه" },
+                new Category() { Id = 3, Name = "موبایل" },
+                new Category() { Id = 4, Name = "لپ تاپ" },
+                new Category() { Id = 5, Name = "کامپیوتر" }
                 );
         }
     }
