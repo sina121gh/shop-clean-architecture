@@ -9,7 +9,7 @@ namespace Shop.Application.Exceptions
     public class NotFoundException : ApplicationException
     {
         public NotFoundException(string name, object key) :
-            base($"{name} ({key}) not found")
+            base($"{name} with id ({key}) not found")
         {
 
         }
