@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Application.Interfaces.Common
+namespace Shop.Application.Contracts.Persistence.Common
 {
     public interface IRepository<T> where T : class
     {

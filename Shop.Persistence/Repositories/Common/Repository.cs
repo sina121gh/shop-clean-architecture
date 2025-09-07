@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shop.Application.Interfaces.Common;
+using Shop.Application.Contracts.Interfaces.Common;
 using Shop.Persistence.Context;
 using System;
 using System.Collections.Generic;

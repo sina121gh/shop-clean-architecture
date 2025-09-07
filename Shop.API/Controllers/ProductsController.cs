@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Domain.Entities;
-using Shop.Application.Interfaces;
 using Mapster;
 using Shop.Application.DTOs.Product;
 using MapsterMapper;
+using Shop.Application.Contracts.Interfaces;
 
 namespace Shop.API.Controllers
 {

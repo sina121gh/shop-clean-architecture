@@ -1,4 +1,4 @@
-﻿using Shop.Application.Interfaces;
+﻿using Shop.Application.Persistence;
 using Shop.Domain.Entities;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Common;

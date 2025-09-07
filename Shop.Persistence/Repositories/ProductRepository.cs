@@ -1,5 +1,4 @@
 ﻿using Shop.Domain.Entities;
-using Shop.Application.Interfaces;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Common;
 using System;
@@ -8,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Shop.Application.Contracts.Persistence;
+using Shop.Application.Persistence;
 
 namespace Shop.Persistence.Repositories
 {

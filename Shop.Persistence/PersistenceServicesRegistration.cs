@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Shop.Application.Interfaces;
-using Shop.Application.Interfaces.Common;
+using Shop.Application.Contracts.Persistence;
+using Shop.Application.Contracts.Persistence.Common;
+using Shop.Application.Persistence;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories;
 using Shop.Persistence.Repositories.Common;
