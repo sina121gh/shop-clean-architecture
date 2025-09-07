@@ -3,7 +3,7 @@ using Shop.Domain.Entities;
 using Mapster;
 using Shop.Application.DTOs.Product;
 using MapsterMapper;
-using Shop.Application.Contracts.Interfaces;
+using Shop.Application.Persistence;
 
 namespace Shop.API.Controllers
 {
