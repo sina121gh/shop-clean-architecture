@@ -4,6 +4,9 @@ using Mapster;
 using Shop.Application.DTOs.Product;
 using MapsterMapper;
 using Shop.Application.Persistence;
+using MediatR;
+using Shop.Application.Features.Products.Queries.GetProductById;
+using Shop.Application.Features.Products.Queries.GetAllProducts;
 
 namespace Shop.API.Controllers
 {
@@ -12,14 +15,19 @@ namespace Shop.API.Controllers
     {
         #region Ctor
 
+        private readonly IMediator _mediator;
+
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository productRepository, 
+        public ProductsController(IMediator mediator,
+            IProductRepository productRepository, 
             ICategoryRepository categoryRepository,
             IMapper mapper)
         {
+            _mediator = mediator;
+
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _mapper = mapper;
@@ -28,21 +36,15 @@ namespace Shop.API.Controllers
         #endregion
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowProductDto>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<ShowProductDto>>> GetAllAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var products = await _productRepository.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<ShowProductDto>>(products));
+            return Ok(await _mediator.Send(new GetAllProductsQuery() { PageNumber = pageNumber, PageSize = pageSize}));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ShowProductWithCategoryDto>> GetProductByIdAsync(int id)
         {
-            var product = await _productRepository.GetProductByIdIncludingCategory(id);
-
-            if (product is null)
-                return NotFound();
-
-            return Ok(_mapper.Map<ShowProductWithCategoryDto>(product));
+            return Ok(await _mediator.Send(new GetProductByIdQuery() { Id = id }));
         }
 
 
