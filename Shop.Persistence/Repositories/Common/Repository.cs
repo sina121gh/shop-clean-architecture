@@ -33,7 +33,7 @@ namespace Shop.Persistence.Repositories.Common
         public async Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
         {
             return await _dbSet
-                .Skip(pageNumber)
+                .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .AsNoTracking()
                 .ToArrayAsync();
