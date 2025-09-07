@@ -9,7 +9,8 @@ namespace Shop.Application.Contracts.Persistence.Common
     public interface IRepository<T> where T : class
     {
         Task<T?> GetByIdAsync(int id);
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IReadOnlyList<T>> GetAllAsync();
+        Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
         Task AddAsync(T entity);
         Task<bool> DoesExistByIdAsync(int id);
 

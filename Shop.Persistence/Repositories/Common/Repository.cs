@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shop.Application.Contracts.Interfaces.Common;
+using Shop.Application.Contracts.Persistence.Common;
 using Shop.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace Shop.Persistence.Repositories.Common
         }
 
         public async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
-        public async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
+        public async Task<IReadOnlyList<T>> GetAllAsync() => await _dbSet.ToListAsync();
         public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);
         public void Update(T entity) => _dbSet.Update(entity);
         public void Delete(T entity) => _dbSet.Remove(entity);
@@ -29,5 +29,14 @@ namespace Shop.Persistence.Repositories.Common
         public async Task<bool> DoesExistByIdAsync(int id) => await _dbSet.FindAsync(id) != null;
 
         public async Task<bool> SaveChangesAsync() => await _context.SaveChangesAsync() > 0;
+
+        public async Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
+        {
+            return await _dbSet
+                .Skip(pageNumber)
+                .Take(pageSize)
+                .AsNoTracking()
+                .ToArrayAsync();
+        }
     }
 }
