@@ -1,6 +1,7 @@
 using DotNetEnv;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Shop.API.Middlewares;
 using Shop.Application;
 using Shop.Persistence;
 using Shop.Persistence.Context;
@@ -17,6 +18,7 @@ builder.Services.AddOpenApi();
 builder.Services.ConfigurePersistenceServices(Env.GetString("SQL_SERVER_CONNECTION_STRING"));
 builder.Services.ConfigureApplicationServices();
 builder.Services.AddMapster();
+
 
 var app = builder.Build();
 
@@ -42,5 +44,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ResponseWrappingMiddleware>();
 
 app.Run();

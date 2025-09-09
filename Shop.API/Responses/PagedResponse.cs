@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Application.Responses
+namespace Shop.API.Responses
 {
     public class PagedResponse<T> : Response<T>
     {

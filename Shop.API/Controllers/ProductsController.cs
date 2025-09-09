@@ -7,6 +7,8 @@ using Shop.Application.Persistence;
 using MediatR;
 using Shop.Application.Features.Products.Queries.GetProductById;
 using Shop.Application.Features.Products.Queries.GetAllProducts;
+using ErrorOr;
+using Shop.API.Extensions.Shop.API.Extensions;
 
 namespace Shop.API.Controllers
 {
@@ -36,15 +38,18 @@ namespace Shop.API.Controllers
         #endregion
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ShowProductDto>>> GetAllAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllAsync(int pageNumber = 1, int pageSize = 10)
         {
-            return Ok(await _mediator.Send(new GetAllProductsQuery() { PageNumber = pageNumber, PageSize = pageSize}));
+            var result = await _mediator.Send(new GetAllProductsQuery() { PageNumber = pageNumber, PageSize = pageSize });
+            return this.ToActionResult(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ShowProductWithCategoryDto>> GetProductByIdAsync(int id)
+        public async Task<IActionResult> GetProductByIdAsync(int id)
         {
-            return Ok(await _mediator.Send(new GetProductByIdQuery() { Id = id }));
+
+            var result = await _mediator.Send(new GetProductByIdQuery() { Id = id });
+            return this.ToActionResult(result);
         }
 
 

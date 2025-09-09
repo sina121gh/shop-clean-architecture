@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Application.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Shop.Application.Contracts.Persistence.Common
     {
         Task<T?> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllAsync();
-        Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
+        Task<PagedResult<T>> GetPagedResponseAsync(int pageNumber, int pageSize);
         Task AddAsync(T entity);
         Task<bool> DoesExistByIdAsync(int id);
 

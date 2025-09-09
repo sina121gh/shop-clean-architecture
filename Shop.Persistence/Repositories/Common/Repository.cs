@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using Shop.Application.Contracts.Persistence.Common;
+using Shop.Application.DTOs;
+using Shop.Domain.Entities;
 using Shop.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -30,13 +33,17 @@ namespace Shop.Persistence.Repositories.Common
 
         public async Task<bool> SaveChangesAsync() => await _context.SaveChangesAsync() > 0;
 
-        public async Task<IReadOnlyList<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
+        public async Task<PagedResult<T>> GetPagedResponseAsync(int pageNumber, int pageSize)
         {
-            return await _dbSet
+            var query = _dbSet.AsQueryable();
+
+            var totalRecords = await query.CountAsync();
+            var items = await query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .AsNoTracking()
-                .ToArrayAsync();
+                .ToListAsync();
+
+            return new PagedResult<T>(items, pageNumber, pageSize, totalRecords);
         }
     }
 }
