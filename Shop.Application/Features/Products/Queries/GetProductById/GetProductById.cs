@@ -1,7 +1,6 @@
 ﻿using ErrorOr;
 using MapsterMapper;
 using MediatR;
-using Shop.Application.DTOs.Product;
 using Shop.Application.Exceptions;
 using Shop.Application.Persistence;
 using System;

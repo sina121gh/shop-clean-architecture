@@ -32,6 +32,6 @@ namespace Shop.API.Responses
 
         public List<string>? Errors { get; set; }
 
-        public T Data { get; set; }
+        public T? Data { get; set; }
     }
 }

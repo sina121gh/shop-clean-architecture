@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Domain.Entities;
 using Mapster;
-using Shop.Application.DTOs.Product;
 using MapsterMapper;
 using Shop.Application.Persistence;
 using MediatR;
 using Shop.Application.Features.Products.Queries.GetProductById;
 using Shop.Application.Features.Products.Queries.GetAllProducts;
 using ErrorOr;
-using Shop.API.Extensions.Shop.API.Extensions;
+using Shop.API.Extensions;
+using Shop.Application.Features.Products.Commands;
 
 namespace Shop.API.Controllers
 {
@@ -54,27 +54,13 @@ namespace Shop.API.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ShowProductDto>> CreateProductAsync([FromBody] CreateProductDto createProductDto)
+        public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductDto createProductDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            //if (!ModelState.IsValid)
+            //    return BadRequest(ModelState);
 
-            var product = _mapper.Map<Product>(createProductDto);
-
-            if (!await _categoryRepository.DoesExistByIdAsync(product.CategoryId)) return NotFound();
-
-            await _productRepository.AddAsync(product);
-
-            try
-            {
-                await _productRepository.SaveChangesAsync();
-                return Created();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-                throw;
-            }
+            var result = await _mediator.Send(new CreateProductCommand() { Product = createProductDto });
+            return this.ToActionResult(result);
         }
 
         [HttpPut("{id}")]

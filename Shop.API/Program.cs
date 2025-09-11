@@ -45,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware<ResponseWrappingMiddleware>();
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.Run();

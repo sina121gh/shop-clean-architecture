@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Application.DTOs.Product
+namespace Shop.Application.Features.Products.Commands
 {
     public record CreateProductDto
     {

@@ -2,7 +2,6 @@
 using MapsterMapper;
 using MediatR;
 using Shop.Application.DTOs;
-using Shop.Application.DTOs.Product;
 using Shop.Application.Persistence;
 using System;
 using System.Collections.Generic;
