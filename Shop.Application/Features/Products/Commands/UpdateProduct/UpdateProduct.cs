@@ -1,46 +1,41 @@
 ﻿using ErrorOr;
 using MapsterMapper;
 using MediatR;
+using Shop.Application.Features.Products.Commands.CreateProduct;
 using Shop.Application.Features.Products.Queries.GetAllProducts;
 using Shop.Application.Persistence;
-using Shop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Application.Features.Products.Commands
+namespace Shop.Application.Features.Products.Commands.UpdateProduct
 {
-    public class CreateProductCommand : IRequest<ErrorOr<ShowProductDto>>
+    public class UpdateProductCommand : IRequest<ErrorOr<ShowProductDto>>
     {
+        public int Id { get; set; }
+
         public CreateProductDto Product { get; set; }
     }
 
-    class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ErrorOr<ShowProductDto>>
+    class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, ErrorOr<ShowProductDto>>
     {
-        #region Ctor
-
-        private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public CreateProductCommandHandler(ICategoryRepository categoryRepository,
-            IProductRepository productRepository,
+        public UpdateProductCommandHandler(IProductRepository productRepository,
             IMapper mapper)
         {
-            _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _mapper = mapper;
         }
 
-        #endregion
 
-        public async Task<ErrorOr<ShowProductDto>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<ShowProductDto>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            var product = _mapper.Map<Product>(request.Product);
-            await _productRepository.AddAsync(product);
-
+            var product = await _productRepository.GetByIdAsync(request.Id);
+            _mapper.Map(request.Product, product);
             try
             {
                 await _productRepository.SaveChangesAsync();

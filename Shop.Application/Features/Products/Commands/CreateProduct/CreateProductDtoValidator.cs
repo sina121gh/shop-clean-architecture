@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Application.Features.Products.Commands
+namespace Shop.Application.Features.Products.Commands.CreateProduct
 {
     public class CreateProductDtoValidator : AbstractValidator<CreateProductDto>
     {

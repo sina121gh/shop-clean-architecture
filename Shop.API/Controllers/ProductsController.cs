@@ -8,7 +8,9 @@ using Shop.Application.Features.Products.Queries.GetProductById;
 using Shop.Application.Features.Products.Queries.GetAllProducts;
 using ErrorOr;
 using Shop.API.Extensions;
-using Shop.Application.Features.Products.Commands;
+using Shop.Application.Features.Products.Commands.CreateProduct;
+using Shop.Application.Features.Products.Commands.UpdateProduct;
+using Shop.Application.Features.Products.Commands.DeleteProduct;
 
 namespace Shop.API.Controllers
 {
@@ -56,56 +58,22 @@ namespace Shop.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductDto createProductDto)
         {
-            //if (!ModelState.IsValid)
-            //    return BadRequest(ModelState);
-
             var result = await _mediator.Send(new CreateProductCommand() { Product = createProductDto });
             return this.ToActionResult(result, 201);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateProductAsync(int id, [FromBody] CreateProductDto product)
+        public async Task<IActionResult> UpdateProductAsync(int id, [FromBody] CreateProductDto product)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var productToUpdate = await _productRepository.GetByIdAsync(id);
-
-            if (productToUpdate is null) return NotFound();
-
-            _mapper.Map(product, productToUpdate);
-
-            _productRepository.Update(productToUpdate);
-
-            try
-            {
-                await _productRepository.SaveChangesAsync();
-                return NoContent();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            var result = await _mediator.Send(new UpdateProductCommand() { Id = id, Product = product });
+            return this.ToActionResult(result);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProductAsync(int id)
+        public async Task<IActionResult> DeleteProductAsync(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
-
-            if (product is null) return NotFound();
-
-           _productRepository.Delete(product);
-
-            try
-            {
-                await _productRepository.SaveChangesAsync();
-                return NoContent();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            var result = await _mediator.Send(new DeleteProductCommand() { Id = id});
+            return this.ToActionResult(result);
         }
     }
 }
