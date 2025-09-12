@@ -60,7 +60,7 @@ namespace Shop.API.Controllers
             //    return BadRequest(ModelState);
 
             var result = await _mediator.Send(new CreateProductCommand() { Product = createProductDto });
-            return this.ToActionResult(result);
+            return this.ToActionResult(result, 201);
         }
 
         [HttpPut("{id}")]
