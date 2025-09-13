@@ -19,13 +19,19 @@ namespace Shop.Persistence.Configurations
                 .HasMaxLength(50)
                 .IsRequired();
 
+            #region Seed Data
+
             builder.HasData(
-                new Category() { Id = 1, Name = "ورزشی" },
-                new Category() { Id = 2, Name = "خانه" },
-                new Category() { Id = 3, Name = "موبایل" },
-                new Category() { Id = 4, Name = "لپ تاپ" },
-                new Category() { Id = 5, Name = "کامپیوتر" }
-                );
+                new Category { Id = 1, Name = "لوازم ورزشی" },
+                new Category { Id = 2, Name = "لوازم خانگی" },
+                new Category { Id = 3, Name = "موبایل و تبلت" },
+                new Category { Id = 4, Name = "لپ‌تاپ و لوازم جانبی" },
+                new Category { Id = 5, Name = "کامپیوتر و قطعات" },
+                new Category { Id = 6, Name = "پوشاک و مد" }
+            );
+
+            #endregion
+
         }
     }
 }
