@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shop.Domain.Entities;
+﻿using ErrorOr;
 using Mapster;
 using MapsterMapper;
-using Shop.Application.Persistence;
 using MediatR;
-using Shop.Application.Features.Products.Queries.GetProductById;
-using Shop.Application.Features.Products.Queries.GetAllProducts;
-using ErrorOr;
+using Microsoft.AspNetCore.Mvc;
 using Shop.API.Extensions;
 using Shop.Application.Features.Products.Commands.CreateProduct;
-using Shop.Application.Features.Products.Commands.UpdateProduct;
 using Shop.Application.Features.Products.Commands.DeleteProduct;
+using Shop.Application.Features.Products.Commands.UpdateProduct;
+using Shop.Application.Features.Products.Queries.GetAllProducts;
+using Shop.Application.Features.Products.Queries.GetProductById;
+using Shop.Application.Parameters;
+using Shop.Application.Persistence;
+using Shop.Domain.Entities;
 
 namespace Shop.API.Controllers
 {
@@ -40,9 +41,9 @@ namespace Shop.API.Controllers
         #endregion
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedRequestParameters filter)
         {
-            var result = await _mediator.Send(new GetAllProductsQuery() { PageNumber = pageNumber, PageSize = pageSize });
+            var result = await _mediator.Send(new GetAllProductsQuery() { PageNumber = filter.PageNumber, PageSize = filter.PageSize });
             return this.ToActionResult(result);
         }
 
