@@ -14,5 +14,7 @@ namespace Shop.Application.Features.Products.Queries.GetAllProducts
         public int? MinPrice { get; set; }
 
         public int? MaxPrice { get; set; }
+
+        public string? Query { get; set; }
     }
 }

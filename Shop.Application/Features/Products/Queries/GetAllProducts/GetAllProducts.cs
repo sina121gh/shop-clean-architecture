@@ -17,6 +17,8 @@ namespace Shop.Application.Features.Products.Queries.GetAllProducts
 
         public int PageSize { get; set; }
 
+        public string? Query { get; set; }
+
         public int? CategoryId { get; set; }
 
         public int? MinPrice { get; set; }
@@ -39,7 +41,8 @@ namespace Shop.Application.Features.Products.Queries.GetAllProducts
         public async Task<ErrorOr<PagedResult<ShowProductDto>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var products = await _productRepository.FilterProductsAsync(request.PageNumber, request.PageSize,
-                request.CategoryId, request.MinPrice, request.MaxPrice);
+                request.Query, request.CategoryId, request.MinPrice, request.MaxPrice);
+
             return new PagedResult<ShowProductDto>(_mapper.Map<IReadOnlyList<ShowProductDto>>(products.Items),
                 products.PageNumber, products.PageSize, products.TotalRecords);
         }

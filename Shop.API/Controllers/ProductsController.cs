@@ -15,7 +15,7 @@ using Shop.Domain.Entities;
 
 namespace Shop.API.Controllers
 {
-    [Route("api/products")]
+    [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
         #region Ctor
@@ -44,7 +44,9 @@ namespace Shop.API.Controllers
         public async Task<IActionResult> GetAllAsync([FromQuery] GetAllProductsParameters filter)
         {
             var result = await _mediator.Send(new GetAllProductsQuery() { PageNumber = filter.PageNumber,
-                PageSize = filter.PageSize, CategoryId = filter.CategoryId, MinPrice = filter.MinPrice, MaxPrice = filter.MaxPrice });
+                PageSize = filter.PageSize, Query = filter.Query, 
+                CategoryId = filter.CategoryId, MinPrice = filter.MinPrice, MaxPrice = filter.MaxPrice });
+
             return this.ToActionResult(result);
         }
 

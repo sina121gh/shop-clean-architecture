@@ -23,9 +23,17 @@ namespace Shop.Persistence.Repositories
         }
 
         public async Task<PagedResult<Product>> FilterProductsAsync(int pageNumber, int pageSize,
-            int? categoryId, decimal? minPrice, decimal? maxPrice)
+            string? query, int? categoryId, decimal? minPrice, decimal? maxPrice)
         {
             var products = _context.Products.AsQueryable();
+
+            //if (!string.IsNullOrEmpty(query))
+            //    products = products.Where(p => p.Name.ToLower().Contains(query)
+            //        || p.Description.ToLower().Contains(query));
+
+            if (!string.IsNullOrEmpty(query))
+                products = products.Where(p => EF.Functions.Like(p.Name, $"%{query}%")
+                || EF.Functions.Like(p.Description, $"%{query}%"));
 
             if (categoryId != null)
                 products = products.Where(p => p.CategoryId == categoryId);
