@@ -1,4 +1,5 @@
-﻿using Shop.Application.Parameters;
+﻿using Shop.Application.Enums;
+using Shop.Application.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,9 @@ namespace Shop.Application.Features.Products.Queries.GetAllProducts
         public int? MaxPrice { get; set; }
 
         public string? Query { get; set; }
+
+        public string SortBy { get; set; } = "Id";
+
+        public SortDirection SortDirection { get; set; } = SortDirection.Asc;
     }
 }

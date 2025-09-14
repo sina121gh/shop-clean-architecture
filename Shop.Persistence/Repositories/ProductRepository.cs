@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Application.Contracts.Persistence;
 using Shop.Application.Persistence;
 using Shop.Application.DTOs;
+using Shop.Application.Extensions;
+using Shop.Application.Enums;
 
 namespace Shop.Persistence.Repositories
 {
@@ -23,26 +25,18 @@ namespace Shop.Persistence.Repositories
         }
 
         public async Task<PagedResult<Product>> FilterProductsAsync(int pageNumber, int pageSize,
-            string? query, int? categoryId, decimal? minPrice, decimal? maxPrice)
+            string? query, int? categoryId, int? minPrice, int? maxPrice, string? sortBy, SortDirection sortDirection)
         {
             var products = _context.Products.AsQueryable();
-
-            //if (!string.IsNullOrEmpty(query))
-            //    products = products.Where(p => p.Name.ToLower().Contains(query)
-            //        || p.Description.ToLower().Contains(query));
 
             if (!string.IsNullOrEmpty(query))
                 products = products.Where(p => EF.Functions.Like(p.Name, $"%{query}%")
                 || EF.Functions.Like(p.Description, $"%{query}%"));
 
-            if (categoryId != null)
-                products = products.Where(p => p.CategoryId == categoryId);
+            products = FilterProducts(products, categoryId, minPrice, maxPrice);
 
-            if (minPrice != null)
-                products = products.Where(p => p.Price >=  minPrice);
-
-            if (maxPrice != null)
-                products = products.Where(p => p.Price <= maxPrice);
+            if (!string.IsNullOrEmpty(sortBy))
+                products = products.Sort(sortBy, sortDirection);
 
             var totalRecords = await products.CountAsync();
             var items = await products
@@ -59,5 +53,21 @@ namespace Shop.Persistence.Repositories
                 .Include(p => p.Category)
                 .SingleOrDefaultAsync(p => p.Id == productId);
         }
+
+        private IQueryable<Product> FilterProducts(IQueryable<Product> products,
+            int? categoryId, decimal? minPrice, decimal? maxPrice)
+        {
+            if (categoryId != null)
+                products = products.Where(p => p.CategoryId == categoryId);
+
+            if (minPrice != null)
+                products = products.Where(p => p.Price >= minPrice);
+
+            if (maxPrice != null)
+                products = products.Where(p => p.Price <= maxPrice);
+
+            return products;
+        }
+
     }
 }

@@ -43,9 +43,7 @@ namespace Shop.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] GetAllProductsParameters filter)
         {
-            var result = await _mediator.Send(new GetAllProductsQuery() { PageNumber = filter.PageNumber,
-                PageSize = filter.PageSize, Query = filter.Query, 
-                CategoryId = filter.CategoryId, MinPrice = filter.MinPrice, MaxPrice = filter.MaxPrice });
+            var result = await _mediator.Send(new GetAllProductsQuery() { Parameters = filter });
 
             return this.ToActionResult(result);
         }
