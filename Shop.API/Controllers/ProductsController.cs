@@ -41,9 +41,10 @@ namespace Shop.API.Controllers
         #endregion
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync([FromQuery] PaginatedRequestParameters filter)
+        public async Task<IActionResult> GetAllAsync([FromQuery] GetAllProductsParameters filter)
         {
-            var result = await _mediator.Send(new GetAllProductsQuery() { PageNumber = filter.PageNumber, PageSize = filter.PageSize });
+            var result = await _mediator.Send(new GetAllProductsQuery() { PageNumber = filter.PageNumber,
+                PageSize = filter.PageSize, CategoryId = filter.CategoryId, MinPrice = filter.MinPrice, MaxPrice = filter.MaxPrice });
             return this.ToActionResult(result);
         }
 
