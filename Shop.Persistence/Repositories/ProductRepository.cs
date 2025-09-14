@@ -29,22 +29,14 @@ namespace Shop.Persistence.Repositories
         {
             var products = _context.Products.AsQueryable();
 
-            if (!string.IsNullOrEmpty(query))
-                products = products.Where(p => EF.Functions.Like(p.Name, $"%{query}%")
-                || EF.Functions.Like(p.Description, $"%{query}%"));
+            products = ApplySearch(products, query);
 
-            products = FilterProducts(products, categoryId, minPrice, maxPrice);
+            products = ApplyFilter(products, categoryId, minPrice, maxPrice);
 
             if (!string.IsNullOrEmpty(sortBy))
                 products = products.Sort(sortBy, sortDirection);
 
-            var totalRecords = await products.CountAsync();
-            var items = await products
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            return new PagedResult<Product>(items, pageNumber, pageSize, totalRecords);
+            return await ToPaginatedResultAsync(products, pageNumber, pageSize);
         }
 
         public async Task<Product?> GetProductByIdIncludingCategory(int productId)
@@ -54,7 +46,7 @@ namespace Shop.Persistence.Repositories
                 .SingleOrDefaultAsync(p => p.Id == productId);
         }
 
-        private IQueryable<Product> FilterProducts(IQueryable<Product> products,
+        private IQueryable<Product> ApplyFilter(IQueryable<Product> products,
             int? categoryId, decimal? minPrice, decimal? maxPrice)
         {
             if (categoryId != null)
@@ -69,5 +61,22 @@ namespace Shop.Persistence.Repositories
             return products;
         }
 
+
+        private IQueryable<Product> ApplySearch(IQueryable<Product> products, string? query)
+        {
+            return products.Where(p => EF.Functions.Like(p.Name, $"%{query}%")
+                || EF.Functions.Like(p.Description, $"%{query}%"));
+        }
+
+        private async Task<PagedResult<Product>> ToPaginatedResultAsync(IQueryable<Product> products, int pageNumber, int pageSize)
+        {
+            var totalRecords = await products.CountAsync();
+            var items = await products
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Product>(items, pageNumber, pageSize, totalRecords);
+        }
     }
 }
