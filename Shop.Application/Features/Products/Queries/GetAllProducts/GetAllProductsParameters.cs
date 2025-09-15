@@ -8,18 +8,12 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Features.Products.Queries.GetAllProducts
 {
-    public class GetAllProductsParameters : PaginatedRequestParameters
+    public class GetAllProductsParameters : FilterAllEntitiesParameters
     {
         public int? CategoryId { get; set; }
 
         public int? MinPrice { get; set; }
 
         public int? MaxPrice { get; set; }
-
-        public string? Query { get; set; }
-
-        public string SortBy { get; set; } = "Id";
-
-        public SortDirection SortDirection { get; set; } = SortDirection.Asc;
     }
 }

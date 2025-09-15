@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Application.Contracts.Persistence;
 using Shop.Application.Persistence;
 using Shop.Application.DTOs;
-using Shop.Application.Extensions;
 using Shop.Application.Enums;
+using Shop.Persistence.Extensions;
 
 namespace Shop.Persistence.Repositories
 {
@@ -36,7 +36,7 @@ namespace Shop.Persistence.Repositories
             if (!string.IsNullOrEmpty(sortBy))
                 products = products.Sort(sortBy, sortDirection);
 
-            return await ToPaginatedResultAsync(products, pageNumber, pageSize);
+            return await products.ToPaginatedResultAsync(pageNumber, pageSize);
         }
 
         public async Task<Product?> GetProductByIdIncludingCategory(int productId)
@@ -66,17 +66,6 @@ namespace Shop.Persistence.Repositories
         {
             return products.Where(p => EF.Functions.Like(p.Name, $"%{query}%")
                 || EF.Functions.Like(p.Description, $"%{query}%"));
-        }
-
-        private async Task<PagedResult<Product>> ToPaginatedResultAsync(IQueryable<Product> products, int pageNumber, int pageSize)
-        {
-            var totalRecords = await products.CountAsync();
-            var items = await products
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            return new PagedResult<Product>(items, pageNumber, pageSize, totalRecords);
         }
     }
 }
