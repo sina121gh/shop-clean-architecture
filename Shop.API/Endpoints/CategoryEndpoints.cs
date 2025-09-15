@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shop.API.Extensions;
 using Shop.Application.Features.Categories.Queries.GetAll;
+using Shop.Application.Features.Categories.Queries.GetCategoryById;
 using Shop.Application.Parameters;
 
 namespace Shop.API.Endpoints
@@ -11,13 +12,20 @@ namespace Shop.API.Endpoints
         public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
         {
             var group = app.MapGroup("/api/categories");
-
-            group.MapGet("/", GetAll);
+            
+            group.MapGet("/", GetAllAsync);
+            group.MapGet("/{id}", GetByIdAsync);
         }
 
-        private static async Task<IResult> GetAll(ISender mediator, [FromQuery] FilterAllEntitiesParameters filter, CancellationToken ct)
+        private static async Task<IResult> GetAllAsync(ISender mediator, [AsParameters] FilterAllEntitiesParameters filter, CancellationToken ct)
         {
             var result = await mediator.Send(new GetAllCategoriesQuery() { Parameters = filter }, ct);
+            return result.ToMinimalApiResult();
+        }
+
+        private static async Task<IResult> GetByIdAsync(ISender mediator, int id, CancellationToken ct)
+        {
+            var result = await mediator.Send(new GetCategoryByIdQuery() { Id = id }, ct);
             return result.ToMinimalApiResult();
         }
     }
