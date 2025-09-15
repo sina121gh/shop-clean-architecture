@@ -25,9 +25,12 @@ namespace Shop.Persistence.Repositories
         }
 
         public async Task<PagedResult<Product>> FilterProductsAsync(int pageNumber, int pageSize,
-            string? query, int? categoryId, int? minPrice, int? maxPrice, string? sortBy, SortDirection sortDirection)
+            string? query, int? categoryId, int? minPrice, int? maxPrice, bool? isActive, string? sortBy, SortDirection sortDirection)
         {
             var products = _context.Products.AsQueryable();
+
+            if (isActive != null)
+                products = products.Where(p => p.IsActive == isActive);
 
             products = ApplySearch(products, query);
 

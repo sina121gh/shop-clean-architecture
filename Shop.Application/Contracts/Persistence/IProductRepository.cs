@@ -15,6 +15,6 @@ namespace Shop.Application.Persistence
         Task<Product?> GetProductByIdIncludingCategory(int productId);
 
         Task<PagedResult<Product>> FilterProductsAsync(int pageNumber, int pageSize,
-            string? query, int? categoryId, int? minPrice, int? maxPrice, string? sortBy, SortDirection sortDirection);
+            string? query, int? categoryId, int? minPrice, int? maxPrice, bool? isActive, string? sortBy, SortDirection sortDirection);
     }
 }
