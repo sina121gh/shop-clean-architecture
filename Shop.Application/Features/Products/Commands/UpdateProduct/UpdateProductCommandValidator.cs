@@ -23,9 +23,13 @@ namespace Shop.Application.Features.Products.Commands.UpdateProduct
 
             RuleFor(x => x.Id)
                 .GreaterThan(0).WithMessage("آیدی محصول را وارد کنید").WithErrorCode("404")
-                .MustAsync(async (id, token) => await _productRepository.DoesExistByIdAsync(id));
-
-            RuleFor(x => x.Product).SetValidator(new CreateProductDtoValidator(_categoryRepository));
+                .MustAsync(async (id, token) => await _productRepository.DoesExistByIdAsync(id))
+                .WithMessage("محصول یافت نشد")
+                .WithErrorCode("404")
+                .DependentRules(() =>
+                {
+                    RuleFor(x => x.Product).SetValidator(new CreateProductDtoValidator(_categoryRepository));
+                });
         }
     }
 }

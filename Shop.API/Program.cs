@@ -1,6 +1,7 @@
 using DotNetEnv;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Shop.API.Endpoints;
 using Shop.API.Middlewares;
 using Shop.Application;
 using Shop.Persistence;
@@ -46,5 +47,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
+
+app.MapCategoryEndpoints();
 
 app.Run();
