@@ -42,21 +42,21 @@ namespace Shop.API.Endpoints
             [FromBody] CreateCategoryDto createCategoryDto, CancellationToken ct)
         {
             var result = await mediator.Send(new CreateCategoryCommand() { Category = createCategoryDto }, ct);
-            return result.ToMinimalApiResult();
+            return result.ToMinimalApiResult(201);
         }
 
         private static async Task<IResult> UpdateCategoryAsync(ISender mediator,
             int id, [FromBody] CreateCategoryDto createCategoryDto, CancellationToken ct)
         {
             var result = await mediator.Send(new UpdateCategoryCommand() { Id = id, Category = createCategoryDto }, ct);
-            return result.ToMinimalApiResult();
+            return result.ToMinimalApiResult(204);
         }
 
         private static async Task<IResult> DeleteCategoryAsync(ISender mediator,
             int id, CancellationToken ct)
         {
             var result = await mediator.Send(new DeleteCategoryCommand() { Id = id }, ct);
-            return result.ToMinimalApiResult();
+            return result.ToMinimalApiResult(204);
         }
     }
 }
