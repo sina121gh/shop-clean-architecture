@@ -18,7 +18,7 @@ namespace Shop.Application.Features.Categories.Commands.Create
         }
     }
 
-    public class CreateCategoryCommandValidator : AbstractValidator<CreateCategory>
+    public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
     {
         public CreateCategoryCommandValidator()
         {
