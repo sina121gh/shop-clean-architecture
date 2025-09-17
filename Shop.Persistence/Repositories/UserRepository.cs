@@ -16,7 +16,7 @@ namespace Shop.Persistence.Repositories
 
         public UserRepository(ShopDbContext context) : base(context)
         {
-            _context = context
+            _context = context;
         }
     }
 }

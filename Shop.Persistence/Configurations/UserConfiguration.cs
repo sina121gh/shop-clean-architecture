@@ -36,6 +36,10 @@ namespace Shop.Persistence.Configurations
             builder.Property(u => u.Password)
                 .HasMaxLength(200)
                 .IsRequired();
+
+            builder.Property(u => u.IsAdmin)
+                .IsRequired()
+                .HasDefaultValue(false);
         }
     }
 }
