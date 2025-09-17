@@ -4,6 +4,7 @@ using Shop.Application.Contracts.Persistence.Common;
 using Shop.Application.DTOs;
 using Shop.Domain.Entities;
 using Shop.Persistence.Context;
+using Shop.Persistence.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,13 +38,7 @@ namespace Shop.Persistence.Repositories.Common
         {
             var query = _dbSet.AsQueryable();
 
-            var totalRecords = await query.CountAsync();
-            var items = await query
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            return new PagedResult<T>(items, pageNumber, pageSize, totalRecords);
+            return await query.ToPaginatedResultAsync(pageNumber, pageSize);
         }
     }
 }
