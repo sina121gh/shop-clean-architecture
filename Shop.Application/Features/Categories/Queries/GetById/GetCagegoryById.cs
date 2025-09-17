@@ -1,13 +1,4 @@
-﻿using ErrorOr;
-using MapsterMapper;
-using MediatR;
-using Shop.Application.DTOs.Category;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Application.DTOs.Category;
 
 namespace Shop.Application.Features.Categories.Queries.GetCategoryById
 {

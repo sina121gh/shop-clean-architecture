@@ -1,15 +1,4 @@
-﻿using ErrorOr;
-using MapsterMapper;
-using MediatR;
-using Shop.Application.DTOs;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.Application.Features.Products.Queries.GetAllProducts
+﻿namespace Shop.Application.Features.Products.Queries.GetAllProducts
 {
     public class GetAllProductsQuery : IRequest<ErrorOr<PagedResult<ShowProductDto>>>
     {

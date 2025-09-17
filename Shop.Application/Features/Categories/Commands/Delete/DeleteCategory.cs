@@ -1,13 +1,4 @@
-﻿using ErrorOr;
-using MediatR;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.Application.Features.Categories.Commands.Delete
+﻿namespace Shop.Application.Features.Categories.Commands.Delete
 {
     public class DeleteCategoryCommand : IRequest<ErrorOr<Unit>>
     {

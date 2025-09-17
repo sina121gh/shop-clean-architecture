@@ -1,13 +1,5 @@
-﻿using FluentValidation;
-using Shop.Application.Contracts.Persistence;
-using Shop.Application.Features.Categories.Commands.Create;
+﻿using Shop.Application.Contracts.Persistence;
 using Shop.Application.Features.Users.Commands.Register;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Application.Features.Users.Commands.UpdateProfile
 {

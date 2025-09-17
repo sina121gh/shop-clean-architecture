@@ -1,13 +1,4 @@
-﻿using ErrorOr;
-using MapsterMapper;
-using MediatR;
-using Shop.Application.Contracts.Persistence;
-using Shop.Application.Features.Users.Queries.GetById;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Application.Contracts.Persistence;
 
 namespace Shop.Application.Features.Users.Commands.Delete
 {

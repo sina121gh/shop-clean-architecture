@@ -1,15 +1,4 @@
-﻿using ErrorOr;
-using MapsterMapper;
-using MediatR;
-using Shop.Application.Exceptions;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.Application.Features.Products.Queries.GetProductById
+﻿namespace Shop.Application.Features.Products.Queries.GetProductById
 {
     public class GetProductByIdQuery : IRequest<ErrorOr<ShowProductWithCategoryDto>>
     {

@@ -1,12 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Validators;
-using Shop.Application.Features.Categories.Commands.Create;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Application.Features.Categories.Commands.Create;
 
 namespace Shop.Application.Features.Categories.Commands.Update
 {

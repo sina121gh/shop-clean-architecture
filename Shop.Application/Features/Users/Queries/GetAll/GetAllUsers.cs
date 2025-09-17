@@ -1,18 +1,6 @@
-﻿using ErrorOr;
-using MapsterMapper;
-using MediatR;
-using Shop.Application.Contracts.Persistence;
-using Shop.Application.DTOs;
-using Shop.Application.DTOs.Category;
+﻿using Shop.Application.Contracts.Persistence;
 using Shop.Application.Features.Categories.Queries.GetAll;
 using Shop.Application.Features.Users.Queries.GetById;
-using Shop.Application.Parameters;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Application.Features.Users.Queries.GetAll
 {

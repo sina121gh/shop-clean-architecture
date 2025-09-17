@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation.Results;
-
-namespace Shop.Application.Exceptions
+﻿namespace Shop.Application.Exceptions
 {
     public class ValidationException : ApplicationException
     {

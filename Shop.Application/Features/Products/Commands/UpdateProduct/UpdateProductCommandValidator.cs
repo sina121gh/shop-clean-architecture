@@ -1,11 +1,4 @@
-﻿using FluentValidation;
-using Shop.Application.Features.Products.Commands.CreateProduct;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Application.Features.Products.Commands.CreateProduct;
 
 namespace Shop.Application.Features.Products.Commands.UpdateProduct
 {

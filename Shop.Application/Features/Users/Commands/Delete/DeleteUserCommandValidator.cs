@@ -1,11 +1,4 @@
-﻿using FluentValidation;
-using Shop.Application.Contracts.Persistence;
-using Shop.Application.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Application.Contracts.Persistence;
 
 namespace Shop.Application.Features.Users.Commands.Delete
 {

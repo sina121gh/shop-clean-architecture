@@ -1,11 +1,4 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.Application.Features.Categories.Commands.Create
+﻿namespace Shop.Application.Features.Categories.Commands.Create
 {
 
     class CreateCategoryDtoValidator : AbstractValidator<CreateCategoryDto>

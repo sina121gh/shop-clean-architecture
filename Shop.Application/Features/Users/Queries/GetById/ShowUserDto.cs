@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shop.Application.Features.Users.Queries.GetById
+﻿namespace Shop.Application.Features.Users.Queries.GetById
 {
     public record ShowUserDto
     {

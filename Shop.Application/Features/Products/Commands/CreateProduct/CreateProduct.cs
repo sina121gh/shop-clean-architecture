@@ -1,14 +1,4 @@
-﻿using ErrorOr;
-using MapsterMapper;
-using MediatR;
-using Shop.Application.Features.Products.Queries.GetAllProducts;
-using Shop.Application.Persistence;
-using Shop.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Application.Features.Products.Queries.GetAllProducts;
 
 namespace Shop.Application.Features.Products.Commands.CreateProduct
 {
