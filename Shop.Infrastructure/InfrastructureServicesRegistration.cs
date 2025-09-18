@@ -9,6 +9,7 @@ namespace Shop.Infrastructure
         public static void ConfigureInfrastructureServices(this IServiceCollection services)
         {
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
         }
     }
 }
