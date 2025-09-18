@@ -1,6 +1,7 @@
 ﻿using Shop.Application.Contracts.Persistence;
 using Shop.Application.Features.Users.Commands.Create;
 using Shop.Application.Features.Users.Queries.GetById;
+using Shop.Application.Security;
 
 namespace Shop.Application.Features.Users.Commands.UpdateProfile
 {
@@ -13,12 +14,15 @@ namespace Shop.Application.Features.Users.Commands.UpdateProfile
     class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, ErrorOr<ShowUserDto>>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPasswordHasher _passwordHasher;
         private readonly IMapper _mapper;
 
         public UpdateProfileCommandHandler(IUserRepository userRepository,
+            IPasswordHasher passwordHasher,
             IMapper mapper)
         {
             _userRepository = userRepository;
+            _passwordHasher = passwordHasher;
             _mapper = mapper;
         }
 
@@ -27,6 +31,8 @@ namespace Shop.Application.Features.Users.Commands.UpdateProfile
             var user = await _userRepository.GetByIdAsync(request.Id);
             if (user is null)
                 return Error.NotFound($"کاربر با آیدی {request.Id} یافت نشد");
+
+            user.Password = _passwordHasher.HashPassword(request.UserDto.Password, user.Salt);
 
             _mapper.Map(request.UserDto, user);
 
