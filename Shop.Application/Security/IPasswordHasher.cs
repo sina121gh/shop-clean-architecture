@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Security
 {
-    public interface IPasswordHelper
+    public interface IPasswordHasher
     {
         string GenerateSalt();
 

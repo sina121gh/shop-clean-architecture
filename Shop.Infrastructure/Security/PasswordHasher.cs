@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Infrastructure.Security
 {
-    public class PasswordHelper : IPasswordHelper
+    public class PasswordHasher : IPasswordHasher
     {
         public string GenerateSalt() => BCrypt.Net.BCrypt.GenerateSalt();
 

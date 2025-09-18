@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.API.Endpoints;
 using Shop.API.Middlewares;
 using Shop.Application;
+using Shop.Infrastructure;
 using Shop.Persistence;
 using Shop.Persistence.Context;
 
@@ -18,6 +19,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.ConfigurePersistenceServices(Env.GetString("SQL_SERVER_CONNECTION_STRING"));
 builder.Services.ConfigureApplicationServices();
+builder.Services.ConfigureInfrastructureServices();
 builder.Services.AddMapster();
 
 

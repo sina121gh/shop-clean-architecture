@@ -8,7 +8,7 @@ namespace Shop.Infrastructure
     {
         public static void ConfigureInfrastructureServices(this IServiceCollection services)
         {
-            services.AddScoped<IPasswordHelper, PasswordHelper>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
         }
     }
 }
