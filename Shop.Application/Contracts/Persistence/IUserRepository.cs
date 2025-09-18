@@ -7,5 +7,7 @@ namespace Shop.Application.Contracts.Persistence
     {
         Task<PagedResult<User>> FilterUsersAsync(int pageNumber, int pageSize,
             string? query, bool? isAdmin, string? sortBy, SortDirection sortDirection);
+
+        Task<User?> GetUserByUserNameAsync(string userName);
     }
 }

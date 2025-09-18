@@ -39,6 +39,12 @@ namespace Shop.Persistence.Repositories
             return await users.ToPaginatedResultAsync(pageNumber, pageSize);
         }
 
+        public async Task<User?> GetUserByUserNameAsync(string userName)
+        {
+            return await _context.Users
+                   .SingleOrDefaultAsync(u => u.UserName == userName);
+        }
+
         private IQueryable<User> ApplySearch(IQueryable<User> users, string? query)
         {
             return users.Where(u => EF.Functions.Like(u.UserName, $"%{query}%")
