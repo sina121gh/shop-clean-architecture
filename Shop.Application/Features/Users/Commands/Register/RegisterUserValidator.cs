@@ -22,11 +22,23 @@ namespace Shop.Application.Features.Users.Commands.Register
         }
     }
 
-    class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
+    public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
     {
-        public RegisterUserCommandValidator()
+        private readonly IUserRepository _userRepository;
+
+        public RegisterUserCommandValidator(IUserRepository userRepository)
         {
+            _userRepository = userRepository;
+
             RuleFor(c => c.RegisterUserDto).SetValidator(new RegisterUserDtoValidator());
+
+            RuleFor(c => c.RegisterUserDto.UserName)
+                .MustAsync(async (userName, cancellationToken) => !await _userRepository.DoesUserNameExistAsync(userName))
+                .WithMessage("این نام کاربری قبلا ثبت شده است");
+
+            RuleFor(c => c.RegisterUserDto.Email)
+                .MustAsync(async (email, cancellationToken) => !await _userRepository.DoesEmailExistAsync(email))
+                .WithMessage("این ایمیل قبلا ثبت شده است");
         }
     }
 }

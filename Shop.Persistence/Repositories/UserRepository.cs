@@ -23,6 +23,18 @@ namespace Shop.Persistence.Repositories
             _context = context;
         }
 
+        public async Task<bool> DoesEmailExistAsync(string email)
+        {
+            return await _context.Users
+                .AnyAsync(u => u.Email == email);
+        }
+
+        public async Task<bool> DoesUserNameExistAsync(string userName)
+        {
+            return await _context.Users
+                .AnyAsync(u => u.UserName == userName);
+        }
+
         public async Task<PagedResult<User>> FilterUsersAsync(int pageNumber, int pageSize,
             string? query, bool? isAdmin, string? sortBy, SortDirection sortDirection)
         {
@@ -39,7 +51,7 @@ namespace Shop.Persistence.Repositories
             return await users.ToPaginatedResultAsync(pageNumber, pageSize);
         }
 
-        public async Task<User?> GetUserByUserNameAsync(string userName)
+        public async Task<User?> GetByUserNameAsync(string userName)
         {
             return await _context.Users
                    .SingleOrDefaultAsync(u => u.UserName == userName);

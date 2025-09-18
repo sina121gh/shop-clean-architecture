@@ -29,12 +29,12 @@ namespace Shop.Application.Features.Users.Commands.Login
 
         public async Task<ErrorOr<string>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserByUserNameAsync(request.Login.UserName);
+            var user = await _userRepository.GetByUserNameAsync(request.Login.UserName);
             if (user is null)
-                return Error.NotFound("کاربر یافت نشد");
+                return Error.Validation(description: "نام کاربری یا کلمه عبور اشتباه است");
 
             if (!_passwordHasher.VerifyPassword(request.Login.Password, user.Password))
-                return Error.Validation("نام کاربری یا کلمه عبور اشتباه است");
+                return Error.Validation(description: "نام کاربری یا کلمه عبور اشتباه است");
 
             var token = _jwtTokenService.GenerateToken(user);
             return token;

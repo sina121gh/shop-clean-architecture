@@ -21,7 +21,7 @@ namespace Shop.Application.Features.Users.Commands.Login
         }
     }
 
-    class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
+    public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
     {
         public LoginUserCommandValidator()
         {

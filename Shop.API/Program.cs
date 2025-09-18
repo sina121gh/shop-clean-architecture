@@ -24,15 +24,18 @@ builder.Services.AddOpenApi();
 
 #region Jwt Settings
 
-var jwtSettings = new JwtSettings()
-{
-    Key = Env.GetString("JWT_KEY"),
-    Issuer = Env.GetString("JWT_ISSUER"),
-    Audience = Env.GetString("JWT_AUDIENCE"),
-    ExpireMinutes = Env.GetInt("JWT_EXPIRE_MINUTES")
-};
+var jwtKey = Env.GetString("JWT_KEY");
+var jwtIssuer = Env.GetString("JWT_ISSUER");
+var jwtAudience = Env.GetString("JWT_AUDIENCE");
+var jwtExpireMinutes = Env.GetInt("JWT_EXPIRE_MINUTES");
 
-builder.Services.AddSingleton(jwtSettings);
+builder.Services.Configure<JwtSettings>(options =>
+{
+    options.Key = jwtKey;
+    options.Issuer = jwtIssuer;
+    options.Audience = jwtAudience;
+    options.ExpireMinutes = jwtExpireMinutes;
+});
 
 #endregion
 
@@ -55,9 +58,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings.Issuer,
-        ValidAudience = jwtSettings.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
     };
 });
 
