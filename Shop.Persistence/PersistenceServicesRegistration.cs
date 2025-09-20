@@ -28,6 +28,8 @@ namespace Shop.Persistence
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IPermissionRepository, PermissionRepository>();
 
             return services;
         }

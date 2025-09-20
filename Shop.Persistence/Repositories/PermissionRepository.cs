@@ -1,4 +1,5 @@
-﻿using Shop.Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Shop.Application.Contracts.Persistence;
 using Shop.Domain.Entities;
 using Shop.Persistence.Context;
 using Shop.Persistence.Repositories.Common;
@@ -13,15 +14,19 @@ namespace Shop.Persistence.Repositories
     public class PermissionRepository : Repository<Permission>, IPermissionRepository
     {
         private readonly ShopDbContext _context;
+        private readonly IRoleRepository _roleRepository;
 
         public PermissionRepository(ShopDbContext context) : base(context)
         {
             
         }
 
-        public Task<bool> DoesUserHavePermissionAsync(int userId ,int permissionId)
+        public async Task<bool> DoesUserHavePermissionAsync(int userId ,int permissionId)
         {
-            throw new NotImplementedException();
+            var userRoleId = await _roleRepository.GetRoleByUserIdAsync(userId);
+            return await _context.RolePermissions
+                .AnyAsync(rp => rp.RoleId == userRoleId
+                && rp.PermissionId == permissionId);
         }
     }
 }
