@@ -6,7 +6,7 @@ namespace Shop.Application.Contracts.Persistence
     public interface IUserRepository : IRepository<User>
     {
         Task<PagedResult<User>> FilterUsersAsync(int pageNumber, int pageSize,
-            string? query, bool? isAdmin, string? sortBy, SortDirection sortDirection);
+            string? query, int? roleId, string? sortBy, SortDirection sortDirection);
 
         Task<User?> GetByUserNameAsync(string userName);
 

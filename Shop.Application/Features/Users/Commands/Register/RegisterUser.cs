@@ -29,7 +29,7 @@ namespace Shop.Application.Features.Users.Commands.Create
             var user = _mapper.Map<User>(request.RegisterUserDto);
             user.Salt = _passwordHasher.GenerateSalt();
             user.Password = _passwordHasher.HashPassword(request.RegisterUserDto.Password, user.Salt);
-            user.IsAdmin = false;
+            user.RoleId = 2;
 
             await _userRepository.AddAsync(user);
 

@@ -34,7 +34,7 @@ namespace Shop.Infrastructure.Security
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim("IsAdmin", user.IsAdmin.ToString())
+                new Claim(ClaimTypes.Role, user.RoleId.ToString())
             };
 
             var jwtSecurityToken = new JwtSecurityToken(

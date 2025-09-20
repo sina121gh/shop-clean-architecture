@@ -26,7 +26,7 @@ namespace Shop.Application.Features.Users.Queries.GetAll
             var result = await _userRepository.FilterUsersAsync(
                 request.Parameters.PageNumber,
                 request.Parameters.PageSize, request.Parameters.Query,
-                request.Parameters.IsAdmin, request.Parameters.SortBy,
+                request.Parameters.RoleId, request.Parameters.SortBy,
                 request.Parameters.SortDirection);
 
             return new PagedResult<ShowUserDto>(_mapper.Map<IReadOnlyList<ShowUserDto>>(result.Items),

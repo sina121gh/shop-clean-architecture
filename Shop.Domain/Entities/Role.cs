@@ -12,5 +12,7 @@ namespace Shop.Domain.Entities
         public string Title { get; set; }
 
         public ICollection<RolePermission> RolePermissions { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }

@@ -37,9 +37,10 @@ namespace Shop.Persistence.Configurations
                 .HasMaxLength(200)
                 .IsRequired();
 
-            builder.Property(u => u.IsAdmin)
-                .IsRequired()
-                .HasDefaultValue(false);
+            builder.HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId)
+                .IsRequired();
         }
     }
 }

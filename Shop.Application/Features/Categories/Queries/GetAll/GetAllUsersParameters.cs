@@ -2,6 +2,6 @@
 {
     public class GetAllUsersParameters : FilterAllEntitiesParameters
     {
-        public bool? IsAdmin { get; set; }
+        public int? RoleId { get; set; }
     }
 }

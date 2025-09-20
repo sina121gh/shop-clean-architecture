@@ -36,12 +36,12 @@ namespace Shop.Persistence.Repositories
         }
 
         public async Task<PagedResult<User>> FilterUsersAsync(int pageNumber, int pageSize,
-            string? query, bool? isAdmin, string? sortBy, SortDirection sortDirection)
+            string? query, int? roleId, string? sortBy, SortDirection sortDirection)
         {
             var users = _context.Users.AsQueryable();
 
-            if (isAdmin != null)
-                users = users.Where(u => u.IsAdmin == isAdmin);
+            if (roleId != null)
+                users = users.Where(u => u.RoleId == roleId);
 
             users = ApplySearch(users, query);
 
