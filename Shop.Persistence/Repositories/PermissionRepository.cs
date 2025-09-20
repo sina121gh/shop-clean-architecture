@@ -1,0 +1,27 @@
+﻿using Shop.Application.Contracts.Persistence;
+using Shop.Domain.Entities;
+using Shop.Persistence.Context;
+using Shop.Persistence.Repositories.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Shop.Persistence.Repositories
+{
+    public class PermissionRepository : Repository<Permission>, IPermissionRepository
+    {
+        private readonly ShopDbContext _context;
+
+        public PermissionRepository(ShopDbContext context) : base(context)
+        {
+            
+        }
+
+        public Task<bool> DoesUserHavePermissionAsync(int userId ,int permissionId)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
