@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Common.Security;
+using Microsoft.AspNetCore.Http;
 using Shop.Application.Contracts.Persistence;
 using Shop.Application.Security;
 using System;
@@ -34,5 +35,23 @@ namespace Shop.Infrastructure.Security
 
         public bool IsAuthenticated =>
         _httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
+
+        public async Task<bool> HasPermissionAsync(string permissionName)
+        {
+            if (UserId is null) return false;
+
+            if (!PermissionDictionary.NameToId.TryGetValue(permissionName, out var permissionId))
+                return false;
+
+            return await _permissionRepository.DoesUserHavePermissionAsync(UserId.Value, permissionId);
+
+        }
+
+        public async Task<bool> HasPermissionAsync(int permissionId)
+        {
+            if (UserId is null) return false;
+
+            return await _permissionRepository.DoesUserHavePermissionAsync(UserId.Value, permissionId);
+        }
     }
 }

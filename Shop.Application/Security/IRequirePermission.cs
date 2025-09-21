@@ -8,6 +8,6 @@ namespace Shop.Application.Security
 {
     public interface IRequirePermission
     {
-        string Permission { get; set; }
+        string Permission { get; }
     }
 }

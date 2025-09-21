@@ -1,10 +1,8 @@
 ﻿using Application.Common.Errors;
-using ErrorOr;
-using MediatR;
 using Shop.Application.Security;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
-public class AuthorizationBehaviour<TRequest, TResponse>
-    : IPipelineBehavior<TRequest, TResponse>
+public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
     where TResponse : IErrorOr
 {
@@ -15,33 +13,29 @@ public class AuthorizationBehaviour<TRequest, TResponse>
         _currentUser = currentUser;
     }
 
-    public async Task<TResponse> Handle(
-        TRequest request,
-        RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
     {
-        // Login Check
+        // Authentication Check
         if (!_currentUser.IsAuthenticated)
-        {
             return (dynamic)Errors.Authorization.Unauthorized;
-        }
 
-        // Permission Check
-        if (request is IRequirePermission requirePermission)
+        if (request is IRequirePermission permReq && request is IRequireOwnership ownReq)
         {
-            if (!_currentUser.HasPermission(requirePermission.Permission))
-            {
-                return (dynamic)Errors.Authorization.Forbidden(requirePermission.Permission);
-            }
-        }
+            var isOwner = _currentUser.UserId == ownReq.ResourceOwnerId;
+            var hasPermission = await _currentUser.HasPermissionAsync(permReq.Permission);
 
-        // Ownership Check
-        if (request is IRequireOwnership requireOwnership)
+            if (!isOwner && !hasPermission)
+                return (dynamic)Errors.Authorization.Forbidden(permReq.Permission);
+        }
+        else if (request is IRequirePermission permOnly)
         {
-            if (_currentUser.UserId != requireOwnership.ResourceOwnerId)
-            {
+            if (!await _currentUser.HasPermissionAsync(permOnly.Permission))
+                return (dynamic)Errors.Authorization.Forbidden(permOnly.Permission);
+        }
+        else if (request is IRequireOwnership ownOnly)
+        {
+            if (_currentUser.UserId != ownOnly.ResourceOwnerId)
                 return (dynamic)Errors.Authorization.NotOwner;
-            }
         }
 
         return await next();

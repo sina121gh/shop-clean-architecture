@@ -8,6 +8,6 @@ namespace Shop.Application.Security
 {
     public interface IRequireOwnership
     {
-        int ResourceOwnerId { get; set; }
+        int ResourceOwnerId { get; }
     }
 }

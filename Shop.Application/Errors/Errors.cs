@@ -19,14 +19,14 @@ public static partial class Errors
 
     public static class Validation
     {
-        public static Error NotFound(string name, int id) =>
-            Error.NotFound(description: $"{name} با آیدی {id} یافت نشد");
+        public static Error NotFound(string entityName, int id) =>
+            Error.NotFound(description: $"{entityName} با آیدی {id} یافت نشد");
 
 
         public static Error NotFound() => Error.NotFound(
             description: "داده مورد نظر یافت نشد");
 
-        public static readonly Error InternalServerError =
+        public static readonly Error Unexpected =
             Error.Unexpected(description: "مشکلی به وجود آمد");
     }
 }

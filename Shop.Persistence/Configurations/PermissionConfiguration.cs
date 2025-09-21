@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Common.Security;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shop.Domain.Entities;
 using System;
@@ -25,30 +26,39 @@ namespace Shop.Persistence.Configurations
                 .IsRequired(false);
 
             builder.HasData(
-                // --- مدیریت کاربران ---
-                new Permission { Id = 1, Title = "مدیریت کاربران", ParentId = null },
+            // Users
+            new Permission { Id = Permissions.Users.Id, Title = Permissions.Users.Name },
+            new Permission { Id = Permissions.Users.Actions.CreateId, Title = Permissions.Users.Actions.CreateName,
+                ParentId = Permissions.Users.Id },
+            new Permission { Id = Permissions.Users.Actions.UpdateId, Title = Permissions.Users.Actions.UpdateName,
+                ParentId = Permissions.Users.Id },
+            new Permission { Id = Permissions.Users.Actions.DeleteId, Title = Permissions.Users.Actions.DeleteName,
+                ParentId = Permissions.Users.Id },
+            new Permission { Id = Permissions.Users.Actions.ViewId, Title = Permissions.Users.Actions.ViewName,
+                ParentId = Permissions.Users.Id },
 
-                new Permission { Id = 2, Title = "مشاهده کاربران", ParentId = 1 },
-                new Permission { Id = 3, Title = "ایجاد کاربر", ParentId = 1 },
-                new Permission { Id = 4, Title = "ویرایش کاربر", ParentId = 1 },
-                new Permission { Id = 5, Title = "حذف کاربر", ParentId = 1 },
+            // Categories
+            new Permission { Id = Permissions.Categories.Id, Title = Permissions.Categories.Name },
+            new Permission { Id = Permissions.Categories.Actions.CreateId, Title = Permissions.Categories.Actions.CreateName,
+                ParentId = Permissions.Categories.Id },
+            new Permission { Id = Permissions.Categories.Actions.UpdateId, Title = Permissions.Categories.Actions.UpdateName,
+                ParentId = Permissions.Categories.Id },
+            new Permission { Id = Permissions.Categories.Actions.DeleteId, Title = Permissions.Categories.Actions.DeleteName,
+                ParentId = Permissions.Categories.Id },
+            new Permission { Id = Permissions.Categories.Actions.ViewId, Title = Permissions.Categories.Actions.ViewName,
+                ParentId = Permissions.Categories.Id },
 
-                // --- مدیریت دسته‌بندی‌ها ---
-                new Permission { Id = 6, Title = "مدیریت دسته‌بندی‌ها", ParentId = null },
-
-                new Permission { Id = 7, Title = "مشاهده دسته‌بندی‌ها", ParentId = 6 },
-                new Permission { Id = 8, Title = "ایجاد دسته‌بندی", ParentId = 6 },
-                new Permission { Id = 9, Title = "ویرایش دسته‌بندی", ParentId = 6 },
-                new Permission { Id = 10, Title = "حذف دسته‌بندی", ParentId = 6 },
-
-                // --- مدیریت محصولات ---
-                new Permission { Id = 11, Title = "مدیریت محصولات", ParentId = null },
-
-                new Permission { Id = 12, Title = "مشاهده محصولات", ParentId = 11 },
-                new Permission { Id = 13, Title = "ایجاد محصول", ParentId = 11 },
-                new Permission { Id = 14, Title = "ویرایش محصول", ParentId = 11 },
-                new Permission { Id = 15, Title = "حذف محصول", ParentId = 11 }
-            );
+            // Products
+            new Permission { Id = Permissions.Products.Id, Title = Permissions.Products.Name },
+            new Permission { Id = Permissions.Products.Actions.CreateId, Title = Permissions.Products.Actions.CreateName,
+                ParentId = Permissions.Products.Id },
+            new Permission { Id = Permissions.Products.Actions.UpdateId, Title = Permissions.Products.Actions.UpdateName,
+                ParentId = Permissions.Products.Id },
+            new Permission { Id = Permissions.Products.Actions.DeleteId, Title = Permissions.Products.Actions.DeleteName,
+                ParentId = Permissions.Products.Id },
+            new Permission { Id = Permissions.Products.Actions.ViewId, Title = Permissions.Products.Actions.ViewName,
+                ParentId = Permissions.Products.Id }
+        );
 
         }
     }

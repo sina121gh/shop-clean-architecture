@@ -26,15 +26,15 @@ namespace Shop.Persistence.Repositories
             return await _context.Users
                 .Where(u => u.Id == userId)
                 .SelectMany(u => u.Role.RolePermissions)
-                .AnyAsync(rp => rp.Permission.Id == permissionId);
+                .AnyAsync(rp => rp.Permission.Id == permissionId
+                || rp.Permission.ParentId == permissionId);
         }
 
-        public async Task<bool> DoesUserHavePermissionAsync(int userId, string permission)
+        public async Task<int?> GetIdByPermissionNameAsync(string permission)
         {
-            return await _context.Users
-                .Where(u => u.Id == userId)
-                .SelectMany(u => u.Role.RolePermissions)
-                .AnyAsync(rp => rp.Permission.Title == permission);
+            var perm = await _context.Permissions
+                .SingleOrDefaultAsync(p => p.Title == permission);
+            return perm?.Id;
         }
     }
 }

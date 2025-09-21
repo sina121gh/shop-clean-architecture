@@ -13,6 +13,7 @@ namespace Shop.Application
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
             services.AddValidatorsFromAssembly(assembly);
 
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         }
     }

@@ -20,11 +20,11 @@ namespace Shop.Persistence.Repositories
 
         }
 
-        public async Task<int> GetRoleByUserIdAsync(int userId)
+        public async Task<int?> GetRoleByUserIdAsync(int userId)
         {
-            return await _context.Users
-                .SingleOrDefaultAsync(u => u.Id == userId)
-                .ContinueWith(x => x.Result.RoleId);
+            var role = await _context.Users
+                .SingleOrDefaultAsync(u => u.Id == userId);
+            return role?.Id;
         }
     }
 }

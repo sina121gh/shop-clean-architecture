@@ -10,6 +10,7 @@ namespace Shop.Application.Contracts.Persistence
     public interface IPermissionRepository : IRepository<Permission>
     {
         Task<bool> DoesUserHavePermissionAsync(int userId, int permissionId);
-        Task<bool> DoesUserHavePermissionAsync(int userId, string permission);
+
+        Task<int?> GetIdByPermissionNameAsync(string permission);
     }
 }

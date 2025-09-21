@@ -9,6 +9,6 @@ namespace Shop.Application.Contracts.Persistence
 {
     public interface IRoleRepository : IRepository<Role>
     {
-        Task<int> GetRoleByUserIdAsync(int userId);
+        Task<int?> GetRoleByUserIdAsync(int userId);
     }
 }

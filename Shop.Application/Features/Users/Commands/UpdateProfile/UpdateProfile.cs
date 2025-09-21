@@ -1,14 +1,18 @@
-﻿using Shop.Application.Contracts.Persistence;
+﻿using Application.Common.Errors;
+using Application.Common.Security;
+using Shop.Application.Contracts.Persistence;
 using Shop.Application.Features.Users.Commands.Create;
 using Shop.Application.Features.Users.Queries.GetById;
 using Shop.Application.Security;
 
 namespace Shop.Application.Features.Users.Commands.UpdateProfile
 {
-    public class UpdateProfileCommand : IRequest<ErrorOr<ShowUserDto>>
+    public class UpdateProfileCommand : IRequest<ErrorOr<ShowUserDto>>, IRequireOwnership, IRequirePermission
     {
         public int Id { get; set; }
         public RegisterUserDto UserDto { get; set; }
+        public string Permission => Permissions.Users.Actions.UpdateName;
+        public int ResourceOwnerId => Id;
     }
 
     class UpdateProfileCommandHandler : IRequestHandler<UpdateProfileCommand, ErrorOr<ShowUserDto>>
@@ -30,7 +34,7 @@ namespace Shop.Application.Features.Users.Commands.UpdateProfile
         {
             var user = await _userRepository.GetByIdAsync(request.Id);
             if (user is null)
-                return Error.NotFound($"کاربر با آیدی {request.Id} یافت نشد");
+                return Errors.Validation.NotFound("کاربر",  request.Id);
 
             user.Password = _passwordHasher.HashPassword(request.UserDto.Password, user.Salt);
 
@@ -43,7 +47,7 @@ namespace Shop.Application.Features.Users.Commands.UpdateProfile
             }
             catch (Exception)
             {
-                return Error.Unexpected("خطایی در ثبت اطلاعات رخ داد");
+                return Errors.Validation.Unexpected;
             }
         }
     }
