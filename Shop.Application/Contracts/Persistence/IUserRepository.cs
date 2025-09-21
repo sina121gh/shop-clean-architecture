@@ -11,6 +11,8 @@ namespace Shop.Application.Contracts.Persistence
         Task<User?> GetByUserNameAsync(string userName);
 
         Task<bool> DoesUserNameExistAsync(string userName);
+        Task<bool> DoesUserNameExistAsync(string userName, int excludingId);
         Task<bool> DoesEmailExistAsync(string email);
+        Task<bool> DoesEmailExistAsync(string email, int excludingId);
     }
 }

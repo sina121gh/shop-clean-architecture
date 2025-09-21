@@ -16,8 +16,9 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
     {
         // Authentication Check
-        if (!_currentUser.IsAuthenticated)
-            return (dynamic)Errors.Authorization.Unauthorized;
+        if (request is IRequireAuthorization)
+            if (!_currentUser.IsAuthenticated)
+                return (dynamic)Errors.Authorization.Unauthorized;
 
         if (request is IRequirePermission permReq && request is IRequireOwnership ownReq)
         {

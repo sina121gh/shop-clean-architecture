@@ -36,9 +36,9 @@ namespace Shop.Application.Features.Users.Commands.UpdateProfile
             if (user is null)
                 return Errors.Validation.NotFound("کاربر",  request.Id);
 
+            _mapper.Map(request.UserDto, user);
             user.Password = _passwordHasher.HashPassword(request.UserDto.Password, user.Salt);
 
-            _mapper.Map(request.UserDto, user);
 
             try
             {

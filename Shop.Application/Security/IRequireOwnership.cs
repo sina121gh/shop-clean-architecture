@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Security
 {
-    public interface IRequireOwnership
+    public interface IRequireOwnership : IRequireAuthorization
     {
         int ResourceOwnerId { get; }
     }

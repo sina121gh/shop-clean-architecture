@@ -11,6 +11,7 @@ using Shop.Application.Features.Users.Commands.Delete;
 using Shop.Application.Features.Users.Commands.UpdateProfile;
 using Shop.Application.Features.Users.Queries.GetAll;
 using Shop.Application.Features.Users.Queries.GetById;
+using Shop.Application.Security;
 using System.Security.Claims;
 
 namespace Shop.API.Controllers
@@ -20,10 +21,13 @@ namespace Shop.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ICurrentUserService _currentUser;
 
-        public UsersController(IMediator mediator)
+        public UsersController(IMediator mediator,
+            ICurrentUserService currentUser)
         {
             _mediator = mediator;
+            _currentUser = currentUser;
         }
 
         [HttpGet]
@@ -46,14 +50,7 @@ namespace Shop.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProfileAsync(int id, [FromBody] RegisterUserDto userDto)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            if (userId != id)
-            {
-                ErrorOr<Unit> unauthorizedResult = Error.Unauthorized();
-                return this.ToActionResult(unauthorizedResult);
-            }
-
-            var result = await _mediator.Send(new UpdateProfileCommand() { Id = userId, UserDto = userDto });
+            var result = await _mediator.Send(new UpdateProfileCommand() { Id = id, UserDto = userDto });
 
             return this.ToActionResult(result);
         }
@@ -62,11 +59,8 @@ namespace Shop.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAccountAsync(int id)
         {
-            var userId = int.Parse(User.Identity?.Name);
-            if (userId != id)
-                return Unauthorized();
 
-            var result = await _mediator.Send(new DeleteUserCommand() { Id = userId});
+            var result = await _mediator.Send(new DeleteUserCommand() { Id = id });
 
             return this.ToActionResult(result);
         }

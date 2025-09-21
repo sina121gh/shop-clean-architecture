@@ -23,11 +23,12 @@ namespace Shop.Persistence.Repositories
 
         public async Task<bool> DoesUserHavePermissionAsync(int userId ,int permissionId)
         {
+            var parentId = await GetParentPermissionIdAsync(permissionId);
             return await _context.Users
                 .Where(u => u.Id == userId)
                 .SelectMany(u => u.Role.RolePermissions)
                 .AnyAsync(rp => rp.Permission.Id == permissionId
-                || rp.Permission.ParentId == permissionId);
+                || rp.PermissionId == parentId);
         }
 
         public async Task<int?> GetIdByPermissionNameAsync(string permission)
@@ -35,6 +36,13 @@ namespace Shop.Persistence.Repositories
             var perm = await _context.Permissions
                 .SingleOrDefaultAsync(p => p.Title == permission);
             return perm?.Id;
+        }
+
+        public async Task<int?> GetParentPermissionIdAsync(int permissionId)
+        {
+            var perm = await _context.Permissions
+                .FindAsync(permissionId);
+            return perm?.ParentId;
         }
     }
 }

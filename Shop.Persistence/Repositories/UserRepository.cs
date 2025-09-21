@@ -29,9 +29,23 @@ namespace Shop.Persistence.Repositories
                 .AnyAsync(u => u.Email == email);
         }
 
+        public async Task<bool> DoesEmailExistAsync(string email, int excludingId)
+        {
+            return await _context.Users
+                .Where(u => u.Id != excludingId)
+                .AnyAsync(u => u.Email == email);
+        }
+
         public async Task<bool> DoesUserNameExistAsync(string userName)
         {
             return await _context.Users
+                .AnyAsync(u => u.UserName == userName);
+        }
+
+        public async Task<bool> DoesUserNameExistAsync(string userName, int excludingId)
+        {
+            return await _context.Users
+                .Where(u => u.Id != excludingId)
                 .AnyAsync(u => u.UserName == userName);
         }
 

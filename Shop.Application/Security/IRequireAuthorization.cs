@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Security
 {
-    public interface IRequirePermission : IRequireAuthorization
+    public interface IRequireAuthorization
     {
-        string Permission { get; }
     }
 }

@@ -12,5 +12,7 @@ namespace Shop.Application.Contracts.Persistence
         Task<bool> DoesUserHavePermissionAsync(int userId, int permissionId);
 
         Task<int?> GetIdByPermissionNameAsync(string permission);
+
+        Task<int?> GetParentPermissionIdAsync(int permissionId);
     }
 }
