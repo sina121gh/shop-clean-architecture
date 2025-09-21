@@ -12,5 +12,8 @@ namespace Shop.Application.Security
         string? UserName { get; }
         string? Email { get; }
         bool IsAuthenticated { get; }
+
+        Task<bool> HasPermissionAsync(string permission);
+        Task<bool> HasPermissionAsync(int permissionId);
     }
 }

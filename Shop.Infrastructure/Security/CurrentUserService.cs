@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Shop.Application.Contracts.Persistence;
 using Shop.Application.Security;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace Shop.Infrastructure.Security
     public class CurrentUserService : ICurrentUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IPermissionRepository _permissionRepository;
 
-        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor,
+            IPermissionRepository permissionRepository)
         {
             _httpContextAccessor = httpContextAccessor;
+            _permissionRepository = permissionRepository;
         }
 
         public int? UserId =>
