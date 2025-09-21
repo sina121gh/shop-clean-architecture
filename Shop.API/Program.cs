@@ -39,6 +39,7 @@ builder.Services.Configure<JwtSettings>(options =>
 
 #endregion
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigurePersistenceServices(Env.GetString("SQL_SERVER_CONNECTION_STRING"));
 builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructureServices();
