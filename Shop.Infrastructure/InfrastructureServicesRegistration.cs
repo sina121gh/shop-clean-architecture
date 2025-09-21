@@ -10,6 +10,7 @@ namespace Shop.Infrastructure
         {
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
         }
     }
 }
