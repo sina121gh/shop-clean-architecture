@@ -7,3 +7,5 @@ global using FluentValidation;
 global using Shop.Application.DTOs;
 global using Shop.Application.Parameters;
 global using Shop.Application.Contracts.Persistence;
+global using Shop.Application.Contracts.Infrastructure;
+ 

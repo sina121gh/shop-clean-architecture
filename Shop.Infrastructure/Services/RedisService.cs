@@ -27,7 +27,7 @@ namespace Shop.Infrastructure.Services
             return await _redis.KeyExistsAsync(key);
         }
 
-        public async Task<string> GetStringAsync(string key)
+        public async Task<string?> GetStringAsync(string key)
         {
             return await _redis.StringGetAsync(key);
         }
@@ -47,7 +47,7 @@ namespace Shop.Infrastructure.Services
             return await SetStringAsync($"UserSecretCode:{userId}", secretKey, TimeSpan.FromDays(365));
         }
 
-        public async Task<string> GetUserSecretCodeAsync(int userId)
+        public async Task<string?> GetUserSecretCodeAsync(int userId)
         {
             return await GetStringAsync($"UserSecretCode:{userId}");
         }

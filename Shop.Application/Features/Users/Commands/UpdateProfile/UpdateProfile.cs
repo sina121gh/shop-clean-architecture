@@ -19,14 +19,17 @@ namespace Shop.Application.Features.Users.Commands.UpdateProfile
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly ICacheService _cacheService;
         private readonly IMapper _mapper;
 
         public UpdateProfileCommandHandler(IUserRepository userRepository,
             IPasswordHasher passwordHasher,
+            ICacheService cacheService,
             IMapper mapper)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _cacheService = cacheService;
             _mapper = mapper;
         }
 
@@ -36,13 +39,20 @@ namespace Shop.Application.Features.Users.Commands.UpdateProfile
             if (user is null)
                 return Errors.Validation.NotFound("کاربر",  request.Id);
 
+            bool shouldLoginAgain = false;
+
+            request.UserDto.Password = _passwordHasher.HashPassword(request.UserDto.Password, user.Salt);
+            if (user.Password != request.UserDto.Password ||
+                user.UserName != request.UserDto.UserName)
+                shouldLoginAgain = true;
+
             _mapper.Map(request.UserDto, user);
-            user.Password = _passwordHasher.HashPassword(request.UserDto.Password, user.Salt);
 
 
             try
             {
                 await _userRepository.SaveChangesAsync();
+                if (shouldLoginAgain) await _cacheService.RemoveUserSecretCodeAsync(user.Id);
                 return _mapper.Map<ShowUserDto>(user);
             }
             catch (Exception)
