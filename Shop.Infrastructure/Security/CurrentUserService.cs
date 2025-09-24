@@ -1,5 +1,6 @@
 ﻿using Application.Common.Security;
 using Microsoft.AspNetCore.Http;
+using Shop.Application.Contracts.Infrastructure;
 using Shop.Application.Contracts.Persistence;
 using Shop.Application.Security;
 using System;
@@ -14,13 +15,10 @@ namespace Shop.Infrastructure.Security
     public class CurrentUserService : ICurrentUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IPermissionRepository _permissionRepository;
 
-        public CurrentUserService(IHttpContextAccessor httpContextAccessor,
-            IPermissionRepository permissionRepository)
+        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
-            _permissionRepository = permissionRepository;
         }
 
         public int? UserId =>
@@ -36,22 +34,11 @@ namespace Shop.Infrastructure.Security
         public bool IsAuthenticated =>
         _httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
 
-        public async Task<bool> HasPermissionAsync(string permissionName)
-        {
-            if (UserId is null) return false;
+        public string? SecretCode => _httpContextAccessor.HttpContext?.User?.FindFirst("SecretCode")?.Value;
 
-            if (!PermissionDictionary.NameToId.TryGetValue(permissionName, out var permissionId))
-                return false;
-
-            return await _permissionRepository.DoesUserHavePermissionAsync(UserId.Value, permissionId);
-
-        }
-
-        public async Task<bool> HasPermissionAsync(int permissionId)
-        {
-            if (UserId is null) return false;
-
-            return await _permissionRepository.DoesUserHavePermissionAsync(UserId.Value, permissionId);
-        }
+        public int? RoleId =>
+        int.TryParse(_httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Role)?.Value, out var roleId)
+            ? roleId
+            : null;
     }
 }

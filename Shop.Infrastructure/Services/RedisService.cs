@@ -42,7 +42,7 @@ namespace Shop.Infrastructure.Services
             return await _redis.StringSetAsync(key, value, expiry: expiration);
         }
 
-        public async Task<bool> SaveUserSecretCodeAsync(int userId, string secretKey)
+        public async Task<bool> SetUserSecretCodeAsync(int userId, string secretKey)
         {
             return await SetStringAsync($"UserSecretCode:{userId}", secretKey, TimeSpan.FromDays(365));
         }
@@ -57,7 +57,7 @@ namespace Shop.Infrastructure.Services
             return await RemoveKeyAsync($"UserSecretCode:{userId}");
         }
 
-        public async Task<bool> CacheRolePermissionsAsync(int roleId, string permissions)
+        public async Task<bool> SetRolePermissionsAsync(int roleId, string permissions)
         {
             return await SetStringAsync($"RolePermissions:{roleId}", permissions);
         }
@@ -89,7 +89,7 @@ namespace Shop.Infrastructure.Services
             return await GetStringAsync($"UserRole:{userId}");
         }
 
-        public async Task<bool> CacheUserRoleAsync(int userId, int roleId)
+        public async Task<bool> SetUserRoleAsync(int userId, int roleId)
         {
             return await SetStringAsync($"UserRole:{userId}", roleId.ToString());
         }

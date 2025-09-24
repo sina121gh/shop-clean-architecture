@@ -18,7 +18,7 @@ namespace Shop.Application.Contracts.Infrastructure
 
         #region User Secret Code
 
-        Task<bool> SaveUserSecretCodeAsync(int userId, string secretKey);
+        Task<bool> SetUserSecretCodeAsync(int userId, string secretKey);
 
         Task<string?> GetUserSecretCodeAsync(int userId);
 
@@ -32,7 +32,7 @@ namespace Shop.Application.Contracts.Infrastructure
 
         #region Role
 
-        Task<bool> CacheRolePermissionsAsync(int roleId, string permissions);
+        Task<bool> SetRolePermissionsAsync(int roleId, string permissions);
 
         Task<bool> RemoveRolePermissionsAsync(int roleId);
 
@@ -40,7 +40,7 @@ namespace Shop.Application.Contracts.Infrastructure
 
         Task<string> GetUserRoleAsync(int userId);
 
-        Task<bool> CacheUserRoleAsync(int userId, int roleId);
+        Task<bool> SetUserRoleAsync(int userId, int roleId);
 
         Task<bool> RemoveUserRoleAsync(int userId);
 

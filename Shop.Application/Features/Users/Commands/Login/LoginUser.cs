@@ -1,4 +1,5 @@
-﻿using Shop.Application.Contracts.Infrastructure;
+﻿using Application.Common.Errors;
+using Shop.Application.Contracts.Infrastructure;
 using Shop.Application.Security;
 using System;
 using System.Collections.Generic;
@@ -40,12 +41,25 @@ namespace Shop.Application.Features.Users.Commands.Login
             if (!_passwordHasher.VerifyPassword(request.Login.Password, user.Password))
                 return Error.Validation(description: "نام کاربری یا کلمه عبور اشتباه است");
 
-            string? userSecretCode = await _cacheService.GetUserSecretCodeAsync(user.Id);
-            if (userSecretCode is null)
+            string? userSecretCode;
+
+            try
             {
-                userSecretCode = Guid.NewGuid().ToString();
-                await _cacheService.SaveUserSecretCodeAsync(user.Id, userSecretCode);
+                userSecretCode = await _cacheService.GetUserSecretCodeAsync(user.Id);
+                if (userSecretCode is null)
+                {
+                    userSecretCode = Guid.NewGuid().ToString();
+                    if(!await _cacheService.SetUserSecretCodeAsync(user.Id, userSecretCode))
+                        return Errors.Validation.Unexpected;
+                }
             }
+            catch (Exception)
+            {
+                return Errors.Validation.Unexpected;
+                throw;
+            }
+
+            
 
             var token = _jwtTokenService.GenerateToken(user, userSecretCode);
             return token;

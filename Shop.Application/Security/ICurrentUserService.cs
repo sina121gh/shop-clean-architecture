@@ -9,11 +9,10 @@ namespace Shop.Application.Security
     public interface ICurrentUserService
     {
         int? UserId { get; }
+        int? RoleId { get; }
         string? UserName { get; }
         string? Email { get; }
+        string? SecretCode { get; }
         bool IsAuthenticated { get; }
-
-        Task<bool> HasPermissionAsync(string permission);
-        Task<bool> HasPermissionAsync(int permissionId);
     }
 }

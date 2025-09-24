@@ -44,5 +44,21 @@ namespace Shop.Persistence.Repositories
                 .FindAsync(permissionId);
             return perm?.ParentId;
         }
+
+        public async Task<IEnumerable<int>> GetPermissionsIdsOfRoleAsync(int roleId)
+        {
+            var permissionsIds = await _context.RolePermissions
+                .Where(rp => rp.RoleId == roleId)
+                .Select(rp => rp.PermissionId)
+                .ToListAsync();
+
+            permissionsIds.AddRange(
+                await _context.Permissions
+                .Where(p => permissionsIds.Contains(p.ParentId.Value))
+                .Select(p => p.Id)
+                .ToListAsync());
+
+            return permissionsIds;
+        }
     }
 }

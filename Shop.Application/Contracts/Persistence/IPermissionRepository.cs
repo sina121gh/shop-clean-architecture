@@ -14,5 +14,7 @@ namespace Shop.Application.Contracts.Persistence
         Task<int?> GetIdByPermissionNameAsync(string permission);
 
         Task<int?> GetParentPermissionIdAsync(int permissionId);
+
+        Task<IEnumerable<int>> GetPermissionsIdsOfRoleAsync(int roleId);
     }
 }
