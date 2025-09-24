@@ -22,7 +22,7 @@ namespace Shop.Infrastructure.Security
             _settings = options.Value;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(User user, string userSecretCode)
         {
             var securityKey = new SymmetricSecurityKey
                 (Encoding.UTF8.GetBytes(_settings.Key));
@@ -34,7 +34,8 @@ namespace Shop.Infrastructure.Security
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.RoleId.ToString())
+                new Claim(ClaimTypes.Role, user.RoleId.ToString()),
+                new Claim("SecretCode", userSecretCode)
             };
 
             var jwtSecurityToken = new JwtSecurityToken(

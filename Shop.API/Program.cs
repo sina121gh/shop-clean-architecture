@@ -42,7 +42,7 @@ builder.Services.Configure<JwtSettings>(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigurePersistenceServices(Env.GetString("SQL_SERVER_CONNECTION_STRING"));
 builder.Services.ConfigureApplicationServices();
-builder.Services.ConfigureInfrastructureServices();
+builder.Services.ConfigureInfrastructureServices(Env.GetString("REDIS_CONNECTION_STRING"));
 builder.Services.AddMapster();
 
 // Configure Authentication

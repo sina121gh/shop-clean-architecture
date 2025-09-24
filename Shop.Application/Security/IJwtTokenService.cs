@@ -9,6 +9,6 @@ namespace Shop.Application.Security
 {
     public interface IJwtTokenService
     {
-        string GenerateToken(User user);
+        string GenerateToken(User user, string userSecretCode);
     }
 }
