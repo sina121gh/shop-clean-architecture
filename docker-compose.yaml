@@ -23,6 +23,7 @@ services:
       - ./:/src
     ports:
       - 8080:8080
+      - 8443:443
     depends_on:
       - sql-server
       - redis

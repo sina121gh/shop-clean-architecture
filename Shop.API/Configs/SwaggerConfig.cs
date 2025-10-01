@@ -10,12 +10,9 @@ namespace Shop.API.Configs
             {
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
-                    Description = @"Jwt Authentication header using the Bearer scheme.
-                            Enterr 'Bearer' [space] and then your token in the text input below.
-                            Example: 'Bearer 1234sddsw'",
-                    Name = "Authorizataion",
+                    Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
+                    Type = SecuritySchemeType.Http,
                     Scheme = "Bearer"
                 });
 
@@ -28,10 +25,7 @@ namespace Shop.API.Configs
                             {
                                 Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
-                            },
-                            Scheme = "ouauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header
+                            }
                         },
                         new List<string>()
                     }

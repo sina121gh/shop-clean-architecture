@@ -30,8 +30,9 @@ namespace Shop.API.Controllers
             _currentUser = currentUser;
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllUsersAsync(GetAllUsersParameters filter)
+        public async Task<IActionResult> GetAllUsersAsync([FromQuery] GetAllUsersParameters filter)
         {
             var result = await _mediator.Send(new GetAllUsersQuery() { Parameters = filter });
 

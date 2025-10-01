@@ -41,6 +41,18 @@ namespace Shop.Persistence.Configurations
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId)
                 .IsRequired();
+
+            builder.HasData(
+                new User()
+                {
+                    Id = 1,
+                    Email = "admin@gmail.com",
+                    UserName = "admin",
+                    RoleId = 1,
+                    Salt = "$2a$11$8C7KA1DtqHPEtintkU5aU.",
+                    Password = "$2a$11$8C7KA1DtqHPEtintkU5aU.HQrnF4kgn4eBJy1Pa1tp7/RHsGnDIfe"
+                });
+
         }
     }
 }
