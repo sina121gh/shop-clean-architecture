@@ -1,12 +1,32 @@
-A simple Clean Architecture shop project with .NET 9, CQRS, Mediator, and role-based permission management.
+🛒 Simple Clean Architecture Shop API
 
-Running with Docker:
+A Clean Architecture shop project built with .NET 9, implementing CQRS and Mediator patterns.
+It includes role-based permission management, and Redis caching is used to speed up permission and role lookups.
 
-Copy .env.example to .env in the Shop.Api folder and update configuration values (e.g., SQL Server connection).
+###  📦 Features
 
-In the project root, run:
+-  Clean Architecture structure
 
-‍‍‍docker compose up --build
+-  CQRS + Mediator patterns
 
+-  Role-based permissions
 
-Happy coding and have fun exploring the project! 🚀
+-  Redis caching for permissions and roles
+
+-  SQL Server database
+
+-  Dockerized for easy setup
+
+###  🐳 Running with Docker
+
+1.Copy .env.example to .env in the Shop.Api folder.
+
+2.Update configuration values in .env (SQL Server connection string, Redis settings, etc.).
+
+3.In the project root, run:
+
+docker compose up --build
+
+4.Open your browser and type http://localhost:8080
+
+Happy coding and enjoy exploring the project! 😄✨
