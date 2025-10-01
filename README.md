@@ -19,14 +19,14 @@ It includes role-based permission management, and Redis caching is used to speed
 
 ###  🐳 Running with Docker
 
-1.Copy .env.example to .env in the Shop.Api folder.
+  1.Copy .env.example to .env in the Shop.Api folder.
 
-2.Update configuration values in .env (SQL Server connection string, Redis settings, etc.).
+  2.Update configuration values in .env (SQL Server connection string, Redis settings, etc.).
 
-3.In the project root, run:
+  3.In the project root, run:
 
-docker compose up --build
+  docker compose up --build
 
-4.Open your browser and type http://localhost:8080
+  4.Open your browser and type http://localhost:8080
 
 Happy coding and enjoy exploring the project! 😄✨
