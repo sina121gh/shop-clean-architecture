@@ -3,6 +3,7 @@ using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Shop.API.Configs;
 using Shop.API.Endpoints;
 using Shop.API.Middlewares;
 using Shop.Application;
@@ -19,8 +20,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
+//builder.Services.AddOpenApi();
+SwaggerConfig.AddSwagger(builder.Services);
 
 #region Jwt Settings
 
@@ -45,7 +46,8 @@ builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigureInfrastructureServices(Env.GetString("REDIS_CONNECTION_STRING"));
 builder.Services.AddMapster();
 
-// Configure Authentication
+#region Authentication Config
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -65,6 +67,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+#endregion
 
 var app = builder.Build();
 
@@ -82,7 +85,9 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().Create
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    //app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
